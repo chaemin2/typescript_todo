@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
+import { Helmet } from 'react-helmet';
 import { useLocation, useParams, Route, Switch, Link, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchCoinInfo, fetchCoinTickers } from './api';
 import Chart from './Chart';
 import Price from './Price';
+import Coins from './Coins';
 
 const Container = styled.div`
 	padding: 0px 10px;
@@ -71,6 +73,19 @@ const Tab = styled.span<{ isActive: boolean }>`
 	a {
 		display: block;
 	}
+`;
+
+const Back = styled.div`
+	width: 70px;
+	height: 30px;
+	background-color: skyblue;
+	color: black;
+	border-radius: 50px;
+	font-weight: bold;
+	margin-top: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 
 interface RouteParams {
@@ -145,8 +160,12 @@ function Coin() {
 	const { isLoading: infoLoading, data: infoData } = useQuery<InfoData>(['info', coinId], () =>
 		fetchCoinInfo(coinId)
 	);
-	const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(['tickers', coinId], () =>
-		fetchCoinTickers(coinId)
+	const { isLoading: tickersLoading, data: tickersData } = useQuery<PriceData>(
+		['tickers', coinId],
+		() => fetchCoinTickers(coinId),
+		{
+			refetchInterval: 5000
+		}
 	);
 	// const [info, setInfo] = useState<InfoData>();
 	// const [priceInfo, setPriceInfo] = useState<PriceData>();
@@ -165,6 +184,16 @@ function Coin() {
 	const loading = infoLoading || tickersLoading;
 	return (
 		<Container>
+			<Helmet>
+				<title>{state?.name ? state.name : loading ? 'Loading...' : infoData?.name}</title>
+			</Helmet>
+			<Link
+				to={{
+					pathname: `/`
+				}}
+			>
+				<Back>BACK</Back>
+			</Link>
 			<Header>
 				<Title>{state?.name ? state.name : loading ? 'Loading...' : infoData?.name}</Title>
 			</Header>
@@ -182,8 +211,8 @@ function Coin() {
 							<span>${infoData?.symbol}</span>
 						</OverviewItem>
 						<OverviewItem>
-							<span>Open Source:</span>
-							<span>{infoData?.open_source ? 'Yes' : 'No'}</span>
+							<span>Price:</span>
+							<span>{tickersData?.quotes.USD.price.toFixed(3)}</span>
 						</OverviewItem>
 					</Overview>
 					<Description>{infoData?.description}</Description>
