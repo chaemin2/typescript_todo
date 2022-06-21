@@ -60,7 +60,8 @@ body{
   background-color:${props => props.theme.bgColor};
   color:${props => props.theme.textColor};
   line-height: 1.2;
-  max-width: 50vw;
+  max-width: 40vw;
+  margin: 0px auto; // 가로 가운데 정렬
 }
 a{
 	text-decoration: none;
