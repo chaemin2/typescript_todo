@@ -1,10 +1,5 @@
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
-import Router from './Router';
-import { ReactQueryDevtools } from 'react-query/devtools';
-import { darkTheme, lightTheme } from './theme';
-import { useState } from 'react';
-import { useRecoilValue } from 'recoil';
-import { isDarkAtom } from './atom';
+import ToDoList from './ToDoList';
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -64,8 +59,6 @@ body{
   background-color:${props => props.theme.bgColor};
   color:${props => props.theme.textColor};
   line-height: 1.2;
-  max-width: 40vw;
-  margin: 0px auto; // 가로 가운데 정렬
 }
 a{
 	text-decoration: none;
@@ -74,14 +67,10 @@ a{
 `;
 
 function App() {
-	const isDark = useRecoilValue(isDarkAtom);
 	return (
 		<>
-			<ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-				<GlobalStyle />
-				<Router />
-				<ReactQueryDevtools initialIsOpen={true} />
-			</ThemeProvider>
+			<GlobalStyle />
+			<ToDoList />
 		</>
 	);
 }

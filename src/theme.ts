@@ -9,13 +9,3 @@ export const darkTheme: DefaultTheme = {
 		mode: 'black'
 	}
 };
-
-export const lightTheme: DefaultTheme = {
-	bgColor: 'whitesmoke',
-	textColor: 'black',
-	coinBgColor: '#ffcccc',
-	accentColor: '#9c88ff',
-	palette: {
-		mode: 'black'
-	}
-};
