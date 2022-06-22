@@ -1,18 +1,20 @@
 import { DefaultTheme } from 'styled-components';
 
-export const theme: DefaultTheme = {
-	textColor: '#f5f6fa',
+export const darkTheme: DefaultTheme = {
 	bgColor: '#2f3640',
-	accentColor: '#44bd32',
+	textColor: 'white',
+	coinBgColor: '#6666ff',
+	accentColor: '#9c88ff',
 	palette: {
 		mode: 'black'
 	}
 };
 
-export const ligththeme: DefaultTheme = {
+export const lightTheme: DefaultTheme = {
+	bgColor: 'whitesmoke',
 	textColor: 'black',
-	bgColor: '#ffffcc',
-	accentColor: '#44bd32',
+	coinBgColor: '#ffcccc',
+	accentColor: '#9c88ff',
 	palette: {
 		mode: 'black'
 	}
