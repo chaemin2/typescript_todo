@@ -6,8 +6,6 @@ declare module 'styled-components' {
 		bgColor: string;
 		accentColor: string;
 		coinBgColor: string;
-		palette: {
-			mode: string;
-		};
+		btnColor?: string;
 	}
 }

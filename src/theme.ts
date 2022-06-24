@@ -5,7 +5,5 @@ export const darkTheme: DefaultTheme = {
 	textColor: 'white',
 	coinBgColor: '#6666ff',
 	accentColor: '#9c88ff',
-	palette: {
-		mode: 'black'
-	}
+	btnColor: 'black'
 };
