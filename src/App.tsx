@@ -69,11 +69,11 @@ function App() {
 		if (destination?.droppableId !== source.droppableId) {
 			// same board movement
 			setToDos(allBoard => {
-				const sourceBoard = [...allBoard[source.droppableId]];
-				const taskObj = sourceBoard[source.index];
-				const destinationBoard = [...allBoard[destination.droppableId]];
-				sourceBoard.splice(source.index, 1);
-				destinationBoard.splice(destination?.index, 0, taskObj);
+				const sourceBoard = [...allBoard[source.droppableId]]; // 옮기기 전 상태
+				const taskObj = sourceBoard[source.index]; // 옮길 대상
+				const destinationBoard = [...allBoard[destination.droppableId]]; // 옮긴 후 상태
+				sourceBoard.splice(source.index, 1); // 옮길 대상 삭제
+				destinationBoard.splice(destination?.index, 0, taskObj); // 삭제된 값을 다시 추가
 				return {
 					...allBoard,
 					[source.droppableId]: sourceBoard,
@@ -85,6 +85,7 @@ function App() {
 
 	const onValid = ({ board }: IForm) => {
 		console.log(board);
+		// 새로운 BOARD 추가 ex)To Do, Doing, Done
 		setToDos(allBoards => {
 			return {
 				...allBoards,

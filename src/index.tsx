@@ -70,6 +70,30 @@ a {
   text-decoration:none;
   color:inherit;
 }
+/* Medium Devices, Desktops Only */
+
+	::-webkit-scrollbar {
+		width: 10px;
+		height: 10px;
+		background-color: rgba(0, 0, 0, 0.06);
+	}
+
+	::-webkit-scrollbar:hover {
+		width: 10px;
+		height: 10px;
+		background-color: rgba(0, 0, 0, 0.09);
+	}
+
+	::-webkit-scrollbar-thumb {
+		border: 2px solid transparent;
+		border-radius: 20px;
+		background-color: #73bbfb; 
+	}
+
+	::-webkit-scrollbar-thumb:active {
+		border-radius: 20px;
+	}
+
 `;
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);

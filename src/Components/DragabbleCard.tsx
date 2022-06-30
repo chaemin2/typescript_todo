@@ -29,6 +29,7 @@ interface iDraggabbleCardProps {
 
 function DragabbledCard({ toDoId, toDoText, index, boardId }: iDraggabbleCardProps) {
 	const setToDos = useSetRecoilState(toDoState);
+	// 리스트 삭제
 	const onClick = () => {
 		setToDos(allBoards => {
 			const boardCopy = [...allBoards[boardId]];

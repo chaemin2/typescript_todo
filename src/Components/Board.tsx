@@ -3,9 +3,10 @@ import { Droppable } from 'react-beautiful-dnd';
 import styled from 'styled-components';
 import DragabbledCard from './DragabbleCard';
 import { IToDo, toDoState } from '../atoms';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
+import { IconButton } from '@mui/material';
 
-const Wreapper = styled.div`
+const Wrapper = styled.div`
 	width: 300px;
 	padding-top: 10px;
 	background-color: ${props => props.theme.boardColor};
@@ -33,8 +34,17 @@ const Area = styled.div<IAreaProps>`
 const Form = styled.form`
 	width: 100%;
 	input {
-		width: 100%;
+		width: 90%;
+		height: 30px;
+		border: 0ch;
+		border-radius: 5px;
 	}
+`;
+
+const DeleteBtn = styled(IconButton)`
+	width: 15px;
+	height: 15px;
+	float: right;
 `;
 
 interface IBoardProps {
@@ -54,6 +64,7 @@ interface IForm {
 function Board({ toDos, boardId }: IBoardProps) {
 	const setToDos = useSetRecoilState(toDoState);
 	const { register, setValue, handleSubmit } = useForm<IForm>();
+	// 리스트 추가
 	const onValid = ({ toDo }: IForm) => {
 		const newToDo = {
 			id: Date.now(),
@@ -67,9 +78,20 @@ function Board({ toDos, boardId }: IBoardProps) {
 		});
 		setValue('toDo', '');
 	};
+
+	// const onClick = () => {
+	// 	setToDos(allBoards => {
+	// 		return { ...allBoards };
+	// 	});
+	// };
 	return (
-		<Wreapper>
+		<Wrapper>
+			{/* <div style={{ display: 'flex', justifyContent: 'space-between' }}> */}
 			<Title>{boardId}</Title>
+			{/* <DeleteBtn aria-label="delete" onClick={onClick}>
+					<ClearIcon />
+				</DeleteBtn> */}
+			{/* </div> */}
 			<Form onSubmit={handleSubmit(onValid)}>
 				<input {...register('toDo', { required: true })} type="text" placeholder={`Add task on ${boardId}`} />
 			</Form>
@@ -81,20 +103,30 @@ function Board({ toDos, boardId }: IBoardProps) {
 						ref={magic.innerRef}
 						{...magic.droppableProps}
 					>
-						{toDos.map((toDo, index) => (
-							<DragabbledCard
-								key={toDo.id}
-								toDoId={toDo.id}
-								toDoText={toDo.text}
-								index={index}
-								boardId={boardId}
-							/>
-						))}
-						{magic.placeholder}
+						{/* 스크롤바 */}
+						<div
+							style={{
+								// position: 'relative',
+								height: '200px',
+								overflow: 'auto'
+								// marginBottom: '100px'
+							}}
+						>
+							{toDos.map((toDo, index) => (
+								<DragabbledCard
+									key={toDo.id}
+									toDoId={toDo.id}
+									toDoText={toDo.text}
+									index={index}
+									boardId={boardId}
+								/>
+							))}
+							{magic.placeholder}
+						</div>
 					</Area>
 				)}
 			</Droppable>
-		</Wreapper>
+		</Wrapper>
 	);
 }
 export default Board;
