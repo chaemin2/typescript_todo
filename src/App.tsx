@@ -1,39 +1,64 @@
-import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 import { toDoState } from './atoms';
 import Board from './Components/Board';
-import DragabbledCard from './Components/DragabbleCard';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { IconButton } from '@mui/material';
+import { useForm } from 'react-hook-form';
 
 const Wrapper = styled.div`
 	display: flex;
 	max-width: 680px;
 	width: 100%;
-	margin: 0 auto;
+	margin: 10px auto;
 	justify-content: center;
 	align-items: center;
-	height: 100vh;
+	/* height: 100vh; */
 `;
 
 const Boards = styled.div`
 	display: grid;
+	justify-content: center;
+	align-items: flex-start;
 	width: 100%;
 	gap: 10px;
 	grid-template-columns: repeat(3, 1fr);
 `;
 
+const DeleteBtn = styled(IconButton)`
+	width: 15px;
+	height: 15px;
+	float: right;
+`;
+
+// const Form = styled.form`
+// 	width: 100%;
+// 	input {
+// 		width: 100%;
+// 	}
+// `;
+
+interface IForm {
+	board: string;
+}
+
 function App() {
 	const [toDos, setToDos] = useRecoilState(toDoState);
+	const { register, setValue, handleSubmit } = useForm<IForm>();
 
 	const onDragEnd = (info: DropResult) => {
 		const { draggableId, destination, source } = info;
 		if (!destination) return;
+		console.log(draggableId, destination, source);
+
 		if (destination?.droppableId === source.droppableId) {
 			// same board movement
 			setToDos(allBoards => {
 				const boardCopy = [...allBoards[source.droppableId]];
+				const taskObj = boardCopy[source.index];
 				boardCopy.splice(source.index, 1);
-				boardCopy.splice(destination?.index, 0, draggableId);
+				boardCopy.splice(destination?.index, 0, taskObj);
 				return {
 					...allBoards,
 					[source.droppableId]: boardCopy
@@ -45,9 +70,10 @@ function App() {
 			// same board movement
 			setToDos(allBoard => {
 				const sourceBoard = [...allBoard[source.droppableId]];
+				const taskObj = sourceBoard[source.index];
 				const destinationBoard = [...allBoard[destination.droppableId]];
 				sourceBoard.splice(source.index, 1);
-				destinationBoard.splice(destination?.index, 0, draggableId);
+				destinationBoard.splice(destination?.index, 0, taskObj);
 				return {
 					...allBoard,
 					[source.droppableId]: sourceBoard,
@@ -56,8 +82,27 @@ function App() {
 			});
 		}
 	};
+
+	const onValid = ({ board }: IForm) => {
+		console.log(board);
+		setToDos(allBoards => {
+			return {
+				...allBoards,
+				[board]: []
+			};
+		});
+		setValue('board', '');
+	};
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
+			<Wrapper>
+				<DeleteBtn aria-label="delete">
+					<DeleteIcon />
+				</DeleteBtn>
+				<form onSubmit={handleSubmit(onValid)}>
+					<input {...register('board', { required: true })} type="text" placeholder={`Add Board`} />
+				</form>
+			</Wrapper>
 			<Wrapper>
 				<Boards>
 					{Object.keys(toDos).map(boardId => (
