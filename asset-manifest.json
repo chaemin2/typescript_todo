@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/typescript_todo/static/js/main.d21bbbd5.js",
+    "main.js": "/typescript_todo/static/js/main.d3d43ae2.js",
     "index.html": "/typescript_todo/index.html",
-    "main.d21bbbd5.js.map": "/typescript_todo/static/js/main.d21bbbd5.js.map"
+    "main.d3d43ae2.js.map": "/typescript_todo/static/js/main.d3d43ae2.js.map"
   },
   "entrypoints": [
-    "static/js/main.d21bbbd5.js"
+    "static/js/main.d3d43ae2.js"
   ]
 }
