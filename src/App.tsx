@@ -26,12 +26,6 @@ const Boards = styled.div`
 	grid-template-columns: repeat(3, 1fr);
 `;
 
-const DeleteBtn = styled(IconButton)`
-	width: 15px;
-	height: 15px;
-	float: right;
-`;
-
 // const Form = styled.form`
 // 	width: 100%;
 // 	input {
@@ -97,9 +91,6 @@ function App() {
 	return (
 		<DragDropContext onDragEnd={onDragEnd}>
 			<Wrapper>
-				<DeleteBtn aria-label="delete">
-					<DeleteIcon />
-				</DeleteBtn>
 				<form onSubmit={handleSubmit(onValid)}>
 					<input {...register('board', { required: true })} type="text" placeholder={`Add Board`} />
 				</form>

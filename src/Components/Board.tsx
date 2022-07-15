@@ -38,6 +38,8 @@ const Form = styled.form`
 		height: 30px;
 		border: 0ch;
 		border-radius: 5px;
+		margin: auto;
+		display: flex;
 	}
 `;
 
